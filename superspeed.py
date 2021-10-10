@@ -68,11 +68,11 @@ def run_speedtest():
     for server in servers:
         result = {}
         # result["ID"] = f"{server}"
-        output = subprocess.run(["speedtest", "-p", "no", "--accept-license", "-s", f"{server}"], capture_output=True, text=True)
+        output = subprocess.run(["speedtest", "-p", "no", "--accept-license", "-s", f"{server}"], capture_output=True)
         if output.returncode != 0:
             continue
 
-        for line in output.stdout.splitlines():
+        for line in output.stdout.decode("utf-8").splitlines():
             if "Server" in line:
                 result["SERVER"] = line.split(":")[1].split("(")[0].strip()
             if "Latency" in line:
